@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Custom PDF Viewer</title>
+  <!-- Include PDF.js library -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.11.338/pdf.min.js"></script>
+  <style>
+    /* Add CSS styles here */
+    .pdf-container {
+      margin-bottom: 20px;
+      border: 1px solid #ccc;
+    }
+    .pdf-title {
+      font-size: 18px;
+      font-weight: bold;
+      padding: 10px;
+    }
+    .pdf-canvas {
+      display: block;
+    }
+  </style>
+</head>
+<body>
+  <!-- Container for PDF viewers -->
+  <div id="pdfContainer"></div>
+
+  <script>
+    // Function to render PDF
+    function renderPDF(url, container) {
+      // Asynchronous download PDF
+      pdfjsLib.getDocument(url).promise.then(function(pdf) {
+        // Iterate through each page of the PDF
+        for (let pageNumber = 1; pageNumber <= pdf.numPages; pageNumber++) {
+          // Create canvas element for each page
+          let canvas = document.createElement('canvas');
+          canvas.className = 'pdf-canvas';
+          // Append canvas to container
+          container.appendChild(canvas);
+
+          // Render page into canvas
+          pdf.getPage(pageNumber).then(function(page) {
+            let context = canvas.getContext('2d');
+            let viewport = page.getViewport({ scale: 1.5 });
+            canvas.height = viewport.height;
+            canvas.width = viewport.width;
+
+            let renderContext = {
+              canvasContext: context,
+              viewport: viewport
+            };
+            page.render(renderContext);
+          });
+        }
+      });
+    }
+
+    // Array of PDF URLs
+    let pdfUrls = ["pdfs/THE NATIONAL YOUTH SERVICE CORPS & NATIONAL DEVELOPMENT.pdf"];
+
+    // Container element
+    let pdfContainer = document.getElementById('pdfContainer');
+
+    // Loop through each PDF URL and render
+    pdfUrls.forEach(function(url, index) {
+      // Create container for each PDF
+      let container = document.createElement('div');
+      container.className = 'pdf-container';
+
+      // Add title
+      let title = document.createElement('div');
+      title.className = 'pdf-title';
+      title.textContent = "THE NATIONAL YOUTH SERVICE CORPS & NATIONAL DEVELOPMENT";
+      container.appendChild(title);
+
+      // Append container to main container
+      pdfContainer.appendChild(container);
+
+      // Render PDF
+      renderPDF(url, container);
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,8 @@
+assets
+img
+lib
+PHPMailer
+mail_config.php
+MailchimpTransactional
+vendor
+swiftmailer-master
