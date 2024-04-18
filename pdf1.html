@@ -1,85 +1,107 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Custom PDF Viewer</title>
-  <!-- Include PDF.js library -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.11.338/pdf.min.js"></script>
+  <meta charset="utf-8">
+  <title>SI E-LIBRARY</title>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <meta content="shuaibu ibrahim e-library and gallery" name="keywords">
+  <meta content="Shuaibu Ibrahim E-Library and Gallery, Shagari Road, Nasarawa LGA, Nasarawa" name="description">
+
+  <!-- Favicon -->
+  <link href="img/logo2.png" rel="icon">
+
+  <!-- Google Web Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Rubik:wght@400;500;600;700&display=swap"
+    rel="stylesheet">
+
+  <!-- Icon Font Stylesheet -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+
+  <!-- Libraries Stylesheet -->
+  <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+  <link href="lib/animate/animate.min.css" rel="stylesheet">
+
+  <!-- Customized Bootstrap Stylesheet -->
+  <link href="css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Template Stylesheet -->
+  <link href="css/style.css" rel="stylesheet">
   <style>
-    /* Add CSS styles here */
-    .pdf-container {
-      margin-bottom: 20px;
-      border: 1px solid #ccc;
+    .card {
+      position: relative;
+      width: 100%;
     }
-    .pdf-title {
-      font-size: 18px;
-      font-weight: bold;
+
+    .card-header {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      background-color: rgb(255, 255, 255);
+      /* Semi-transparent white background */
       padding: 10px;
+      box-sizing: border-box;
+      font-weight: bold;
     }
-    .pdf-canvas {
-      display: block;
+
+    .pdf-viewer {
+      width: 100%;
+      height: 100vh;
+      /* Match viewport height */
+      border: none;
+      /* Remove iframe border */
     }
   </style>
 </head>
+
 <body>
-  <!-- Container for PDF viewers -->
-  <div id="pdfContainer"></div>
+  <div class="container-fluid position-relative p-0">
+    <nav class="navbar navbar-expand-lg navbar-dark px-5 py-3 py-lg-0">
+      <a href="index.html" class="navbar-brand p-0">
+        <h1 class="m-0"><img src="img/logo4.png" alt="logo" height="100%"></h1>
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+        <span class="fa fa-bars"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarCollapse">
+        <div class="navbar-nav ms-auto py-0">
+          <a href="index.html" class="nav-item nav-link active">HOME</a>
+        </div>
 
-  <script>
-    // Function to render PDF
-    function renderPDF(url, container) {
-      // Asynchronous download PDF
-      pdfjsLib.getDocument(url).promise.then(function(pdf) {
-        // Iterate through each page of the PDF
-        for (let pageNumber = 1; pageNumber <= pdf.numPages; pageNumber++) {
-          // Create canvas element for each page
-          let canvas = document.createElement('canvas');
-          canvas.className = 'pdf-canvas';
-          // Append canvas to container
-          container.appendChild(canvas);
+      </div>
+    </nav>
+    <div id="header-carousel" class="carousel slide carousel-fade" data-bs-ride="carousel">
+      <div class="carousel-inner">
 
-          // Render page into canvas
-          pdf.getPage(pageNumber).then(function(page) {
-            let context = canvas.getContext('2d');
-            let viewport = page.getViewport({ scale: 1.5 });
-            canvas.height = viewport.height;
-            canvas.width = viewport.width;
+        <div class="carousel-item active">
+          <img class="w-100" src="img/carousel-4.jpg" alt="Image">
+        </div>
 
-            let renderContext = {
-              canvasContext: context,
-              viewport: viewport
-            };
-            page.render(renderContext);
-          });
-        }
-      });
-    }
+      </div>
+    </div>
+  </div>
+  </div>
 
-    // Array of PDF URLs
-    let pdfUrls = ["pdfs/THE NATIONAL YOUTH SERVICE CORPS & NATIONAL DEVELOPMENT.pdf"];
+  <div class="container-fluid">
+    <div class="card">
+      <div class="card-header">THE NATIONAL YOUTH SERVICE CORPS & NATIONAL DEVELOPMENT</div>
+      <iframe src="nyscpdf1.pdf" class="pdf-viewer" frameborder="0"
+        title="THE NATIONAL YOUTH SERVICE CORPS & NATIONAL DEVELOPMENT"></iframe>
+    </div>
+    <!-- Add more cards for other PDF files -->
+  </div>
 
-    // Container element
-    let pdfContainer = document.getElementById('pdfContainer');
+  <!-- JavaScript Libraries -->
+  <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
 
-    // Loop through each PDF URL and render
-    pdfUrls.forEach(function(url, index) {
-      // Create container for each PDF
-      let container = document.createElement('div');
-      container.className = 'pdf-container';
-
-      // Add title
-      let title = document.createElement('div');
-      title.className = 'pdf-title';
-      title.textContent = "THE NATIONAL YOUTH SERVICE CORPS & NATIONAL DEVELOPMENT";
-      container.appendChild(title);
-
-      // Append container to main container
-      pdfContainer.appendChild(container);
-
-      // Render PDF
-      renderPDF(url, container);
-    });
-  </script>
+  <!-- Template Javascript -->
+  <script src="js/main.js"></script>
 </body>
+
 </html>
